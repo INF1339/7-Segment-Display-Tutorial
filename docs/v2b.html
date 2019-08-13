@@ -1,0 +1,69 @@
+<html>
+<head>
+    <title>PAGE TITLE</title>
+    <style>
+        .keypad-module  {background-color: aqua;}
+        .dec2bcd-module {background-color: beige;}
+        .bcd2bin-module {background-color: blue;}
+        .ssd-module     {background-color: chartreuse;}
+        .block-diagram  {border: solid; padding: 15px; text-align: center}
+        .segment {background-color: red; border:solid;}
+        .blank {background-color: lightgray;}
+    </style>
+    <script>
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td class="keypad-module block-diagram" id="keypad">
+                KeyPad
+                <input type="text" id="number"></input><br />
+                <button type="button">1</button>
+                <button type="button">2</button>
+                <button type="button">3</button><br />
+                <button type="button">4</button>
+                <button type="button">5</button>
+                <button type="button">6</button><br />
+                <button type="button">7</button>
+                <button type="button">8</button>
+                <button type="button">9</button><br />
+                <button type="button">0</button>
+            </td>
+            <td class="dec2bcd-module block-diagram" id="dec2bcd">BCD Encoder</td>
+            <td class="bcd2bin-module block-diagram" id="bcd2bin">BCD Decoder</td>
+            <td class="ssd-module block-diagram" id="ssd">
+                7 Segment Display
+                    <table>
+                        <tr>
+                            <td class="blank"> </td>
+                            <td id="Sa" class="segment">a</td>
+                            <td class="blank"> </td>
+                        </tr>
+                        <tr>
+                            <td id="Sf" class="segment">f</td>
+                            <td class="blank"> </td>
+                            <td id="Sb" class="segment">b</td>
+                        </tr>
+                        <tr>
+                            <td class="blank"> </td>
+                            <td id="Sg" class="segment">g</td>
+                            <td class="blank"> </td>
+                        </tr>
+                        <tr>
+                            <td id="Se" class="segment">e</td>
+                            <td class="blank"> </td>
+                            <td id="Sc" class="segment">c</td>
+                        </tr>
+                        <tr>
+                            <td class="blank"> </td>
+                            <td id="Sd" class="segment">d</td>
+                            <td class="blank"> </td>
+                        </tr>
+                    </table>  
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
