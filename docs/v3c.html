@@ -1,0 +1,129 @@
+<html><head>
+    <title>Seven-Segment Display</title>
+    <style>
+        .keypad-module  {background-color: aqua;}
+        .dec2bcd-module {background-color: beige;}
+        .bcd2bin-module {background-color: blue;}
+        .ssd-module     {background-color: chartreuse;}
+        .block-diagram  {border: solid; padding: 15px; text-align: center}
+        .segment {background-color: red; border:solid;}
+        .blank {background-color: lightgray;}
+    </style>
+    <script>
+        function displaytest(x) {         document.getElementById('testbuttonoutput').innerHTML = x
+         if (x == 1) {illuminate([0,1,1,0,0,0,0])}                        
+        }
+        
+        function display(decimalNumber) {
+            wxyz = decimal2bcd(decimalNumber)
+            abcdefg = bcd2sevensegmentsignals(wxyz)
+            illuminateSegments(abcdefg)
+        }
+        
+        function decimal2bcd(decimalNumber) {
+            /* temporary hardcoded for input = 1, output = '0001' */
+            document.getElementById('bcd-encoder-msg').innerHTML = decimalNumber
+            return ('0001')
+        }
+        function bcd2sevensegmentsignals(wxyz) {
+            /* temporary hardcoded for input = '0001', output = '0110000' */
+            document.getElementById('bcd-decoder-msg').innerHTML = wxyz
+            return ('0110000')
+        }
+        function illuminateSegments(abcdefg) {
+            /* temporary hardcoded for input = '0110000', output = turn on segments b and c */
+            document.getElementById('Sa').style.backgroundColor = 'grey'
+            document.getElementById('Sb').style.backgroundColor =  'red'
+            document.getElementById('Sc').style.backgroundColor =  'red'
+            document.getElementById('Sd').style.backgroundColor = 'grey'
+            document.getElementById('Se').style.backgroundColor = 'grey'
+            document.getElementById('Sf').style.backgroundColor = 'grey'
+            document.getElementById('Sg').style.backgroundColor = 'grey'
+            document.getElementById('ssd-msg').innerHTML = abcdefg
+        }
+        
+function illuminate (signals) { 
+    if (signals[0] == 1) 
+         {document.getElementById('Sa').style.backgroundColor =  'red'}                      
+    else {document.getElementById('Sa').style.backgroundColor = 'grey'} 
+    if (signals[1] == 1) 
+         {document.getElementById('Sb').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sb').style.backgroundColor = 'grey'} 
+    if (signals[2] == 1) 
+         {document.getElementById('Sc').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sc').style.backgroundColor = 'grey'} 
+    if (signals[3] == 1) 
+         {document.getElementById('Sd').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sd').style.backgroundColor = 'grey'} 
+    if (signals[4] == 1)
+         {document.getElementById('Se').style.backgroundColor =  'red'} 
+    else {document.getElementById('Se').style.backgroundColor = 'grey'} 
+    if (signals[5] == 1) 
+         {document.getElementById('Sf').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sf').style.backgroundColor = 'grey'} 
+    if (signals[6] == 1) 
+         {document.getElementById('Sg').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sg').style.backgroundColor = 'grey'}
+}
+    </script>
+</head>
+<body>
+    <table>
+        <tbody><tr>
+            <td class="keypad-module block-diagram" id="keypad">
+                KeyPad<br>
+                <button type="button" onclick="display(1)">1</button>
+                <button type="button" onclick="display(2)">2</button>
+                <button type="button" onclick="display(3)">3</button><br>
+                <button type="button">4</button>
+                <button type="button">5</button>
+                <button type="button">6</button><br>
+                <button type="button">7</button>
+                <button type="button">8</button>
+                <button type="button">9</button><br>
+                <button type="button">0</button><br>
+                <p id="testbuttonoutput"></p>
+            </td>
+            <td class="dec2bcd-module block-diagram" id="dec2bcd">BCD Encoder
+                <p id="bcd-encoder-msg">msg</p>
+            </td>
+            <td class="bcd2bin-module block-diagram" id="bcd2bin">BCD Decoder
+                <p id="bcd-decoder-msg">msg</p>
+            </td>
+            <td class="ssd-module block-diagram" id="ssd">
+                7 Segment Display
+                    <table>
+                        <tbody><tr>
+                            <td class="blank"> </td>
+                            <td id="Sa" class="segment">a</td>
+                            <td class="blank"> </td>
+                        </tr>
+                        <tr>
+                            <td id="Sf" class="segment">f</td>
+                            <td class="blank"> </td>
+                            <td id="Sb" class="segment">b</td>
+                        </tr>
+                        <tr>
+                            <td class="blank"> </td>
+                            <td id="Sg" class="segment">g</td>
+                            <td class="blank"> </td>
+                        </tr>
+                        <tr>
+                            <td id="Se" class="segment">e</td>
+                            <td class="blank"> </td>
+                            <td id="Sc" class="segment">c</td>
+                        </tr>
+                        <tr>
+                            <td class="blank"> </td>
+                            <td id="Sd" class="segment">d</td>
+                            <td class="blank"> </td>
+                        </tr>
+                    </tbody></table>
+                    <p id="ssd-msg">msg</p>
+                    <button type="button" onclick="illuminate('a', 1)">Segment a ON</button>
+                    <button type="button" onclick="illuminate('a', 0)">Segment a OFF</button>
+            </td>
+        </tr>
+    </tbody></table>
+
+</body></html>
