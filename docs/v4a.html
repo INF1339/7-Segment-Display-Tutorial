@@ -1,0 +1,150 @@
+<html><head>
+    <title>Seven-Segment Display</title>
+    <style>
+        .keypad-module  {background-color: aqua;}
+        .dec2bcd-module {background-color: beige;}
+        .bcd2bin-module {background-color: blue;}
+        .ssd-module     {background-color: chartreuse;}
+        .block-diagram  {border: solid; padding: 15px; text-align: center;}
+        .segment {background-color: red; border:none; text-align: center;} 
+        .noborder {border-collapse: collapse;}
+        .horizontal {height: 20px; width: 40px;}
+        .vertical {height: 40px; width: 10px;}
+        .blank-horizontal {background-color: lightgray; height: 20px; width: 5px;}
+        .blank-vertical {background-color: lightgray; width: 20px;}
+   </style>
+    <script>
+        function displaytest(x) {         document.getElementById('testbuttonoutput').innerHTML = x
+         if (x == 1) {illuminate([0,1,1,0,0,0,0])}                        
+        }
+        
+        function display(decimalNumber) {
+            wxyz = decimal2bcd(decimalNumber)
+            abcdefg = bcd2sevensegmentsignals(wxyz)
+            illuminate(abcdefg)
+        }
+        
+        function decimal2bcd(decimalNumber) {
+            var bcd = ['0000', '0001', '0010', '0011', '0100', '0101', '0110', '0111', '1000', '1001']
+            document.getElementById('bcd-encoder-msg').innerHTML = bcd[decimalNumber]
+            return (bcd[decimalNumber])
+        }
+        function bcd2sevensegmentsignals(wxyz) {    
+            /* split wxyz string into separate variables w,x,y,z */       
+            var w = wxyz[0] == '1' ? true : false
+            var x = wxyz[1] == '1' ? true : false
+            var y = wxyz[2] == '1' ? true : false
+            var z = wxyz[3] == '1' ? true : false
+            /* evaluate minimized logical expression for each segment a-g */
+            a = !w&&y || !x&&!y&&!z ||w&&!x&&!y || !w&&x&&z
+            b = !w&&!x&&y || !w&&!x&&!z || !w&&y&&z || !x&&!y || !w&&!y&&!z
+            c = !w&&z || !x&&!y || !w&&x
+            d = !w&&x&&!y&&z || !w&&!x&&!z || w&&!x&&!y ||!w&&y&&!z || !w&&!x&&y
+            e = !w&&y&&!z ||!x&&!y&&!z 
+            f = !w&&!y&&!z || !w&&x&&!z || w&&!x&&!y || !w&&x&&!y
+            g = !w&&!x&&y || !w&&x&&!y || !w&&x&&!z || w&&!x&&!y
+            /* return array of segment signals */
+            return ([a,b,c,d,e,f,g])}        
+        
+        function illuminateSegments(abcdefg) {
+            /* temporary hardcoded for input = '0110000', output = turn on segments b and c */
+            document.getElementById('Sa').style.backgroundColor = 'grey'
+            document.getElementById('Sb').style.backgroundColor =  'red'
+            document.getElementById('Sc').style.backgroundColor =  'red'
+            document.getElementById('Sd').style.backgroundColor = 'grey'
+            document.getElementById('Se').style.backgroundColor = 'grey'
+            document.getElementById('Sf').style.backgroundColor = 'grey'
+            document.getElementById('Sg').style.backgroundColor = 'grey'
+            document.getElementById('ssd-msg').innerHTML = abcdefg
+        }
+        
+function illuminate (signals) { 
+    if (signals[0]) 
+         {document.getElementById('Sa').style.backgroundColor =  'red'}                      
+    else {document.getElementById('Sa').style.backgroundColor = 'lightgray'} 
+    if (signals[1]) 
+         {document.getElementById('Sb').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sb').style.backgroundColor = 'lightgray'} 
+    if (signals[2]) 
+         {document.getElementById('Sc').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sc').style.backgroundColor = 'lightgray'} 
+    if (signals[3]) 
+         {document.getElementById('Sd').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sd').style.backgroundColor = 'lightgray'} 
+    if (signals[4])
+         {document.getElementById('Se').style.backgroundColor =  'red'} 
+    else {document.getElementById('Se').style.backgroundColor = 'lightgray'} 
+    if (signals[5]) 
+         {document.getElementById('Sf').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sf').style.backgroundColor = 'lightgray'} 
+    if (signals[6]) 
+         {document.getElementById('Sg').style.backgroundColor =  'red'} 
+    else {document.getElementById('Sg').style.backgroundColor = 'lightgray'}
+}
+    </script>
+</head>
+<body>
+    <table>
+        <tbody><tr>
+            <td class="keypad-module block-diagram" id="keypad">
+                KeyPad<br>
+                <button type="button" onclick="display(1)">1</button>
+                <button type="button" onclick="display(2)">2</button>
+                <button type="button" onclick="display(3)">3</button><br>
+                <button type="button" onclick="display(4)">4</button>
+                <button type="button" onclick="display(5)">5</button>
+                <button type="button" onclick="display(6)">6</button><br>
+                <button type="button" onclick="display(7)">7</button>
+                <button type="button" onclick="display(8)">8</button>
+                <button type="button" onclick="display(9)">9</button><br>
+                <button type="button" onclick="display(0)">0</button><br>
+                <p id="testbuttonoutput"></p>
+            </td>
+            <td class="dec2bcd-module block-diagram" id="dec2bcd">BCD Encoder
+                <p id="bcd-encoder-msg">msg</p>
+            </td>
+            <td class="bcd2bin-module block-diagram" id="bcd2bin">BCD Decoder
+                <p id="bcd-decoder-msg">msg</p>
+            </td>
+            <td class="ssd-module block-diagram" id="ssd">
+                7 Segment Display
+
+                    <table class="noborder">
+                        <tbody>
+                            <tr>
+                                <td class="blank-horizontal"> </td>
+                                <td id="Sa"  class="segment horizontal" colspan="3"></td>
+                                <td class="blank-horizontal"> </td>
+                            </tr>
+                            <tr>
+                                <td id="Sf"  class="segment vertical" colspan="2"></td>
+                                
+                                <td class="blank-vertical"> </td>
+                                
+                                <td id="Sb"  class="segment vertical" colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td class="blank-horizontal"> </td>
+                                <td id="Sg"  class="segment horizontal" colspan="3"></td>
+                                <td class="blank-horizontal"> </td>
+                            </tr>
+                            <tr>
+                                <td id="Se"  class="segment vertical" colspan="2"></td>
+                                
+                                <td class="blank-vertical"> </td>
+                                
+                                <td id="Sc"  class="segment vertical" colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td class="blank-horizontal"> </td>
+                                <td id="Sd"  class="segment horizontal" colspan="3"></td>
+                                <td class="blank-horizontal"> </td>
+                            </tr>
+                    </tbody>
+                </table>
+
+            </td>
+        </tr>
+    </tbody></table>
+
+</body></html>
