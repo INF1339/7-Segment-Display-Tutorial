@@ -30,6 +30,8 @@
             illuminate(ssd)
         }
         function bin2ssd(binary) {
+            //write input to UI to communicate process inside blackboxes
+            document.getElementById("ssd_input").innerHTML = binary
               //convert the four bit input string into w,x,y,z variables
                var w = false //set them all to false at first then change if input is '1'
                var x = false
@@ -63,6 +65,7 @@
                return (output) //initial default just illuminates segment A
               }
         function illuminate(signals) {
+            //write input to UI to communicate process inside blackboxes
             document.getElementById("segments").innerHTML = signals
             if (signals[0] == '1') {
                 document.getElementById("segmentA").innerHTML =''
@@ -112,7 +115,7 @@
     </script>
     </head>
     <body>
-        <h2>Version </h2>
+        <h2>Version 9i</h2>
         <table class="standardTable">
             <tr>
                 <td class="blackbox"><h3>Keypad</h3>
@@ -134,7 +137,7 @@
                 </td>
                 <td class="blackbox">
                     <h3>Binary to SSD Signals</h3>
-                    <p id="binary_output"></p><p id="segments"></p>
+                    <p id="ssd_input"></p><p id="segments"></p>
                 </td>
                 
                 <td class="blackbox">
